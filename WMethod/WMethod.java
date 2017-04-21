@@ -352,46 +352,43 @@ public class WMethod{
    Driver for the W-algorithm.
    */
    public static void main(String [] args){
+	
+		System.out.println("Test Generation Using the W-method. V2.0. August 1, 2013\n");
+	     fileSource=new Scanner(System.in);
+	     fsmFilename=getFilename(); // Get  from the user file name for FSM.
+	     for (int i = 0; i < outputArray.length; i++){
+	       outputArray[i] = ""; // Initialize array that will contain the output alphabet.
+	     }
+	     for (int j = 0; j < inputArray.length; j++){
+	       inputArray[j] = ""; // Initialize array that will contain the input alphabet.
+	     }
+	     getFSM(); // Get the FSM. Determine the input and output alphabets.
+	     
+	     String [] realInput = new String [countInputs];
+	     
+	     for(int z = 0; z < realInput.length; z++){
+	       realInput[z] = inputArray[z]; // Real Input contains only the elements of the input alphabet.
+	     }
+	     Arrays.sort(realInput);
+	     System.out.println("FSM input from:  "+fsmFilename);
+	     if(Utilities.fsmPrintSw)
+	       printFSM(realInput); // Print FSM.
+	     
+	     // Generate testingTree (Section 5.6.3 in the textbook).
+	     TestingTree transitionCover = new TestingTree(FSM, numberOfStates); 
+	     // Generate P-tables and the W set (Section 5.5 in the textbook).
+	     pTableManager w = new pTableManager(FSM, numberOfStates, realInput);
+	     Vector <String> tests=generateTests(transitionCover, w); // Generate tests.
+	     Utilities.printAllTestCases(tests); // Print tests.
+	     
+	     for(int i = 0; i < maxStates; i++){
+	     Utilities.runFSM(FSM, startState, seperator(tests.get(i)), " ");
+	     }
+	
+	   
+	  
      
-     System.out.println("Test Generation Using the W-method. V2.0. August 1, 2013\n");
-     fileSource=new Scanner(System.in);
-     fsmFilename=getFilename(); // Get  from the user file name for FSM.
-     for (int i = 0; i < outputArray.length; i++){
-       outputArray[i] = ""; // Initialize array that will contain the output alphabet.
-     }
-     for (int j = 0; j < inputArray.length; j++){
-       inputArray[j] = ""; // Initialize array that will contain the input alphabet.
-     }
-     getFSM(); // Get the FSM. Determine the input and output alphabets.
-     
-     String [] realInput = new String [countInputs];
-     
-     for(int z = 0; z < realInput.length; z++){
-       realInput[z] = inputArray[z]; // Real Input contains only the elements of the input alphabet.
-     }
-     Arrays.sort(realInput);
-     System.out.println("FSM input from:  "+fsmFilename);
-     if(Utilities.fsmPrintSw)
-       printFSM(realInput); // Print FSM.
-     
-     // Generate testingTree (Section 5.6.3 in the textbook).
-     TestingTree transitionCover = new TestingTree(FSM, numberOfStates); 
-     // Generate P-tables and the W set (Section 5.5 in the textbook).
-     pTableManager w = new pTableManager(FSM, numberOfStates, realInput);
-     Vector <String> tests=generateTests(transitionCover, w); // Generate tests.
-     Utilities.printAllTestCases(tests); // Print tests.
-     
-     // TODO: 	Write the necessary code to iterate through all test cases and run them against
-     // 		the FSM using the Utilities.runFSM() method. 
-     //
-     // Example use of the Utilities.runFSM() method
-     // Utilities.runFSM(FSM, 1, "a a b a b", " ");
-     
-     
-     for(int i = 0; i < maxStates; i++){
-     Utilities.runFSM(FSM, startState, seperator(tests.get(i)), " ");
-     }
-   }// End of main()
+   }
    
    public static String seperator(String teststring){
 	   String testingString = "";
