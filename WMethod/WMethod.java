@@ -412,7 +412,7 @@ public class WMethod{
 	   String testingString = "";
        for (int i = 0; i < teststring.length(); i++) {
     	   testingString = testingString+teststring.charAt(i);
-           if (i != (teststring.length() - 1)) {
+           if (i != teststring.length() - 1) {
                testingString = testingString + " ";
            }
        }
