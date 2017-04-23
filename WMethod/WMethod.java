@@ -320,6 +320,8 @@ public class WMethod{
       return false;
     }// End of existsInVector()  
     
+    
+
   
    public static Vector<String> generateTests(TestingTree tree, pTableManager tablemanager){
     Vector <String> pVector = new Vector<String>();
@@ -327,7 +329,8 @@ public class WMethod{
     Vector<String> testCases = new Vector<String>(); // Contains generated test cases (strings)
     pVector = tree.getPValues(); // Get the transition cover set (P) 
     wVector = tablemanager.getW(); // Get the W set
-    pVector.add(new String("")); // The transition cover set contains the empty string.
+    pVector.add(new String(""));
+    // The transition cover set contains the empty string.
     
     // Generate tests by computing P.W. 
     // We assume m=n, where m is the number of states in the FSM of the program under test
@@ -367,6 +370,7 @@ public class WMethod{
 	     String [] realInput = new String [countInputs];
 	     
 	     for(int z = 0; z < realInput.length; z++){
+	    	 
 	       realInput[z] = inputArray[z]; // Real Input contains only the elements of the input alphabet.
 	     }
 	     Arrays.sort(realInput);
@@ -378,7 +382,7 @@ public class WMethod{
 	     TestingTree transitionCover = new TestingTree(FSM, numberOfStates); 
 	     // Generate P-tables and the W set (Section 5.5 in the textbook).
 	     pTableManager w = new pTableManager(FSM, numberOfStates, realInput);
-	     Vector <String> tests=generateTests(transitionCover, w); // Generate tests.
+	     Vector <String> tests= generateTests(transitionCover, w); // Generate tests.
 	     Utilities.printAllTestCases(tests); // Print tests.
 	     
 	     for(int i = 0; i < maxStates; i++){
@@ -389,7 +393,21 @@ public class WMethod{
 	  
      
    }
-   
+   public static String regExp(String str){
+	  String testingString = "";
+   for (int i = 0; i < str.length(); i++) {
+  		 if(Character.isDigit(str.charAt(i))){
+        		if(str.charAt(i) == '0')
+        			testingString = testingString+"0"; 
+        		else if (str.charAt(i) == '7')
+        			testingString = testingString+"7";
+        		else
+        			testingString = testingString+"*";
+  	 }
+   	}
+   return seperator(testingString+"");
+   	
+   }
    public static String seperator(String teststring){
 	   String testingString = "";
        for (int i = 0; i < teststring.length(); i++) {
@@ -400,7 +418,7 @@ public class WMethod{
        }
        return testingString;
    }
-   
+ 
    
 }//End of class WMethod
 

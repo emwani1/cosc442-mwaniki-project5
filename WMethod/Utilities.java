@@ -93,8 +93,6 @@ public class Utilities{
         Utilities.debugFSMExecution("Current state: "+currentState);
         Edge nextStateEdge=FSM[currentState].getNextState(token);
         String outputGenerated=nextStateEdge.output();
-        if(outputGenerated.equals("1"))
-        	outputGenerated = "0x01";
         int nextState=nextStateEdge.tail();
         outputPattern=outputPattern+outputGenerated;
         Utilities.debugFSMExecution(" Input: "+token+" Next state: "+nextState+" Output: "+outputGenerated);
